@@ -41,5 +41,6 @@ Caching will only work for requests to fetch data and requests that manipulate d
 	- Although the API/MVC modelstate validation is nice and works really well. I wouldn't want to have persistence validation and ViewModel validation getting out of sync
 		- Such as the limitation on how long a name of an account can be. On the persistence entity this has a limit of 100 characters, we can add this constraint to the dto but if this were to change, the person making the change would need to be aware of all the other locations in code where a string longer than 100 characters could be mapped to that persistence entity.
 	- Also allows us to test the validation through the Unit Tests a bit easier
+- I added the EF Core Migrate command in the `Startup.cs`, while there are arguments as to why this should not be in the APIs startup logic, I did it out of convenience as I didn't want to create another solution to run the migrations on the server separately.
 - I added appsettings.Production.json to the git repo out of convenience. 
 	- Since this file can potentially contain secrets it is better to keep this file somewhere that only the CI CD can access.
