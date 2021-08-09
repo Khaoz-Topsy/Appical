@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Appical.Domain.Dto.Account;
 using Appical.Domain.Dto.AccountOwner;
+using Microsoft.Extensions.Logging;
 
 namespace Appical.Api.Controllers
 {
@@ -17,11 +18,13 @@ namespace Appical.Api.Controllers
     {
         private readonly IAccountOwnerRepository _accountOwnerRepo;
         private readonly IAccountRepository _accountRepo;
+        private readonly ILogger<AccountOwnerController> _logger;
 
-        public AccountOwnerController(IAccountOwnerRepository accountOwnerRepo, IAccountRepository accountRepo)
+        public AccountOwnerController(ILogger<AccountOwnerController> logger, IAccountOwnerRepository accountOwnerRepo, IAccountRepository accountRepo)
         {
             _accountOwnerRepo = accountOwnerRepo;
             _accountRepo = accountRepo;
+            _logger = logger;
         }
 
         /// <summary>
@@ -50,8 +53,9 @@ namespace Appical.Api.Controllers
             {
                 return BadRequest(validationEx.Messages);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong");
             }
         }
@@ -79,8 +83,9 @@ namespace Appical.Api.Controllers
 
                 return Ok(accounts);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong");
             }
         }
@@ -113,8 +118,9 @@ namespace Appical.Api.Controllers
             {
                 return NotFound($"AccountOwner with Id: {doesNotExistEx.Id} does not exist");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong");
             }
         }
@@ -147,8 +153,9 @@ namespace Appical.Api.Controllers
             {
                 return NotFound($"AccountOwner with Id: {doesNotExistEx.Id} does not exist");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong");
             }
         }
@@ -185,8 +192,9 @@ namespace Appical.Api.Controllers
             {
                 return BadRequest(validationEx.Messages);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong");
             }
         }
@@ -222,8 +230,9 @@ namespace Appical.Api.Controllers
             {
                 return BadRequest($"AccountOwner has accounts that are not zero: {string.Join(", ", accountBalanceNotZeroException.AccountIds)}");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong");
             }
         }

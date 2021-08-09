@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Appical.Domain.Dto.Account;
 using Appical.Domain.Enum;
 using Appical.Domain.Exception;
 using Appical.Persistence.Repository.Interface;
+using Microsoft.Extensions.Logging;
 
 namespace Appical.Api.Controllers
 {
@@ -17,10 +17,12 @@ namespace Appical.Api.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountRepository _accountRepo;
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(IAccountRepository accountRepo)
+        public AccountController(ILogger<AccountController> logger, IAccountRepository accountRepo)
         {
             _accountRepo = accountRepo;
+            _logger = logger;
         }
 
         /// <summary>
@@ -50,8 +52,9 @@ namespace Appical.Api.Controllers
             {
                 return NotFound($"Account with Id: {doesNotExistEx.Id} does not exist");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong");
             }
         }
@@ -87,8 +90,9 @@ namespace Appical.Api.Controllers
             {
                 return BadRequest($"The following Accounts have a balance greater than zero: {string.Join(", ", accountBalanceNotZeroException.AccountIds)}");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong");
             }
         }
