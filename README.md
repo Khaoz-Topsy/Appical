@@ -28,8 +28,9 @@ Caching will only work for requests to fetch data and requests that manipulate d
 
 #### Testing
 
-- I primarily used the `AssessmentTest.cs` file to ensure that the code worked. The unit tests in the file follow the UseCases defined in the Assessment task closely.
-- Once I was confident that everything was working I moved on to testing through Postman and creating step by step requests that also match the UseCases defined in the Assessment task.
+- I primarily used the `AssessmentTest.cs` file to ensure that the code worked. The unit tests in the file follow the UseCases defined in the Technical Assessment PDF closely.
+- Once I was confident that everything was working I moved on to testing through Postman and creating step by step requests that also match the UseCases defined in the Technical Assessment PDF.
+	- I have attached the Postman requests collection as well as the Environment variables I used to reduce copy pasting code [PostmanInstructions](PostManInstructions.md)
 
 ---
 
@@ -39,4 +40,4 @@ Caching will only work for requests to fetch data and requests that manipulate d
 		- Such as the limitation on how long a name of an account can be. On the persistence entity this has a limit of 100 characters, we can add this constraint to the dto but if this were to change, the person making the change would need to be aware of all the other locations in code where a string longer than 100 characters could be mapped to that persistence entity.
 	- Also allows us to test the validation through the Unit Tests a bit easier
 - I added appsettings.Production.json to the git repo out of convenience. 
-	- Since this file will potentially contain secrets it is better to keep this file somewhere that the CI CD can access
+	- Since this file can potentially contain secrets it is better to keep this file somewhere that only the CI CD can access.
