@@ -19,6 +19,10 @@ Caching will only work for requests to fetch data and requests that manipulate d
 - CI / CD with Azure DevOps 
 	- Build: [![Build Status](https://dev.azure.com/khaoznet/KhaozNet/_apis/build/status/Khaoz-Topsy.Appical?branchName=master)](https://dev.azure.com/khaoznet/KhaozNet/_build/latest?definitionId=79&branchName=master)
 	- Release: [![Release Status](https://vsrm.dev.azure.com/khaoznet/_apis/public/Release/badge/b5441643-fd7c-4330-92d7-bffc23a7e0a4/37/44)](https://vsrm.dev.azure.com/khaoznet/_apis/public/Release/badge/b5441643-fd7c-4330-92d7-bffc23a7e0a4/37/44)
+- Postman files
+	- API calls collection according to UseCases provided [Appical.postman_collection.json](Appical.postman_collection.json)
+	- Environment variable for Postman API calls to reduce copy pasting [Appical.postman_environment.json](Appical.postman_environment.json)
+	- Steps to use the Postman Collection and Environment Variables [PostmanInstructions](PostManInstructions.md)
 
 ---
 
