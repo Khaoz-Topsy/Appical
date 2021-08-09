@@ -81,7 +81,9 @@ namespace Appical.Persistence.Repository
         /// </summary>
         public async Task<List<TransactionDto>> Read()
         {
-            List<Transaction> accountOwners = await _db.Transactions.ToListAsync();
+            List<Transaction> accountOwners = await _db.Transactions
+                .OrderByDescending(t => t.ActionDate)
+                .ToListAsync();
             return accountOwners.Select(TransactionMapper.ToDto).ToList();
         }
 
@@ -105,8 +107,9 @@ namespace Appical.Persistence.Repository
         public async Task<TransactionDto> GetLatestTransactionId(Guid accountId)
         {
             Transaction existingPersistence = await _db.Transactions
+                .Where(tran => tran.AccountId.Equals(accountId))
                 .OrderByDescending(t => t.ActionDate)
-                .FirstOrDefaultAsync(tran => tran.AccountId.Equals(accountId));
+                .FirstOrDefaultAsync();
             if (existingPersistence == null) throw new PersistenceEntityDoesNotExistException(accountId);
 
             return TransactionMapper.ToDto(existingPersistence);

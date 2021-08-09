@@ -26,6 +26,13 @@ Caching will only work for requests to fetch data and requests that manipulate d
 
 ---
 
+#### Testing
+
+- I primarily used the `AssessmentTest.cs` file to ensure that the code worked. The unit tests in the file follow the UseCases defined in the Assessment task closely.
+- Once I was confident that everything was working I moved on to testing through Postman and creating step by step requests that also match the UseCases defined in the Assessment task.
+
+---
+
 #### Decisions made
 - I moved the validation closer to the database
 	- Although the API/MVC modelstate validation is nice and works really well. I wouldn't want to have persistence validation and ViewModel validation getting out of sync
