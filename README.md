@@ -16,9 +16,11 @@ Caching will only work for requests to fetch data and requests that manipulate d
 
 ### Additional features
 - Hosted online: [appical.kurtlourens.com](https://appical.kurtlourens.com)
+	- I use Cloudflare to provide HTTPS Certificate as well as cache web assets on my domain. I have turned off caching completely for Appical as it causes havoc with the GET requests 
 - CI / CD with Azure DevOps 
 	- Build: [![Build Status](https://dev.azure.com/khaoznet/KhaozNet/_apis/build/status/Khaoz-Topsy.Appical?branchName=master)](https://dev.azure.com/khaoznet/KhaozNet/_build/latest?definitionId=79&branchName=master)
 	- Release: [![Release Status](https://vsrm.dev.azure.com/khaoznet/_apis/public/Release/badge/b5441643-fd7c-4330-92d7-bffc23a7e0a4/37/44)](https://vsrm.dev.azure.com/khaoznet/_apis/public/Release/badge/b5441643-fd7c-4330-92d7-bffc23a7e0a4/37/44)
+	- [Build YAML file used](azure-pipelines.yml)
 - Postman files
 	- API calls collection according to UseCases provided [Appical.postman_collection.json](Appical.postman_collection.json)
 	- Environment variable for Postman API calls to reduce copy pasting [Appical.postman_environment.json](Appical.postman_environment.json)
@@ -28,8 +30,9 @@ Caching will only work for requests to fetch data and requests that manipulate d
 
 #### Testing
 
-- I primarily used the `AssessmentTest.cs` file to ensure that the code worked. The unit tests in the file follow the UseCases defined in the Assessment task closely.
-- Once I was confident that everything was working I moved on to testing through Postman and creating step by step requests that also match the UseCases defined in the Assessment task.
+- I primarily used the `AssessmentTest.cs` file to ensure that the code worked. The unit tests in the file follow the UseCases defined in the Technical Assessment PDF closely.
+- Once I was confident that everything was working I moved on to testing through Postman and creating step by step requests that also match the UseCases defined in the Technical Assessment PDF.
+	- I have attached the Postman requests collection as well as the Environment variables I used to reduce copy pasting code [PostmanInstructions](PostManInstructions.md)
 
 ---
 
@@ -39,4 +42,4 @@ Caching will only work for requests to fetch data and requests that manipulate d
 		- Such as the limitation on how long a name of an account can be. On the persistence entity this has a limit of 100 characters, we can add this constraint to the dto but if this were to change, the person making the change would need to be aware of all the other locations in code where a string longer than 100 characters could be mapped to that persistence entity.
 	- Also allows us to test the validation through the Unit Tests a bit easier
 - I added appsettings.Production.json to the git repo out of convenience. 
-	- Since this file will potentially contain secrets it is better to keep this file somewhere that the CI CD can access
+	- Since this file can potentially contain secrets it is better to keep this file somewhere that only the CI CD can access.

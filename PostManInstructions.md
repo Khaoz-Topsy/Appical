@@ -18,7 +18,7 @@ UseCase2
 
 UseCase3
 - Step 1, copy `id` and paste in Environment Variable `latestTransaction`
-- Step 2, Should fail. Balance cennot be negative
+- Step 2, Should fail. Balance cannot be negative
 - Step 3
 - Step 4, Balance should be equal to `useCase2AmountToAdd` - `useCase3AmountToSubtract`
 
