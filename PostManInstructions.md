@@ -1,4 +1,5 @@
-Using the PostMan collection
+### Using the PostMan collection
+
 - Import the Collection
 - Import the Environment Variables
 	- apiUrl: https://appical.kurtlourens.com
