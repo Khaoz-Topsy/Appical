@@ -16,9 +16,11 @@ Caching will only work for requests to fetch data and requests that manipulate d
 
 ### Additional features
 - Hosted online: [appical.kurtlourens.com](https://appical.kurtlourens.com)
+	- I use Cloudflare to provide HTTPS Certificate as well as cache web assets on my domain. I have turned off caching completely for Appical as it causes havoc with the GET requests 
 - CI / CD with Azure DevOps 
 	- Build: [![Build Status](https://dev.azure.com/khaoznet/KhaozNet/_apis/build/status/Khaoz-Topsy.Appical?branchName=master)](https://dev.azure.com/khaoznet/KhaozNet/_build/latest?definitionId=79&branchName=master)
 	- Release: [![Release Status](https://vsrm.dev.azure.com/khaoznet/_apis/public/Release/badge/b5441643-fd7c-4330-92d7-bffc23a7e0a4/37/44)](https://vsrm.dev.azure.com/khaoznet/_apis/public/Release/badge/b5441643-fd7c-4330-92d7-bffc23a7e0a4/37/44)
+	- [Build YAML file used](azure-pipelines.yml)
 - Postman files
 	- API calls collection according to UseCases provided [Appical.postman_collection.json](Appical.postman_collection.json)
 	- Environment variable for Postman API calls to reduce copy pasting [Appical.postman_environment.json](Appical.postman_environment.json)
