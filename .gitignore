@@ -250,6 +250,3 @@ uploads/
 
 desktop.ini
 
-**/*appsettings*.json
-AssistantApps.Domain/Typescript/*
-AssistantApps.LanguageImport/import/*
