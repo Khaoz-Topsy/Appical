@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31515.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Appical.Api", "Appical.Api\Appical.Api.csproj", "{693093F3-70C8-453F-8BED-A2A11834BF3D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Appical.Domain", "Appical.Domain\Appical.Domain.csproj", "{6BB8C6C5-D343-4EE0-9F85-77C5EF3EAB13}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Appical.Persistence", "Appical.Persistence\Appical.Persistence.csproj", "{12D4E0E9-AB4B-4F62-A5BD-9F9761DCC9F2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Appical.Data", "Appical.Data\Appical.Data.csproj", "{B7B9D9B6-2AC3-4BF7-9FE7-12F27E317F24}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Appical.Test", "Appical.Test\Appical.Test.csproj", "{13370F57-C421-4D4E-9D79-696A5E725046}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{267F503B-634F-415F-84FB-36116088D72C}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipelines.yml = azure-pipelines.yml
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{693093F3-70C8-453F-8BED-A2A11834BF3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{693093F3-70C8-453F-8BED-A2A11834BF3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{693093F3-70C8-453F-8BED-A2A11834BF3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{693093F3-70C8-453F-8BED-A2A11834BF3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BB8C6C5-D343-4EE0-9F85-77C5EF3EAB13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BB8C6C5-D343-4EE0-9F85-77C5EF3EAB13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BB8C6C5-D343-4EE0-9F85-77C5EF3EAB13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BB8C6C5-D343-4EE0-9F85-77C5EF3EAB13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12D4E0E9-AB4B-4F62-A5BD-9F9761DCC9F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12D4E0E9-AB4B-4F62-A5BD-9F9761DCC9F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12D4E0E9-AB4B-4F62-A5BD-9F9761DCC9F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12D4E0E9-AB4B-4F62-A5BD-9F9761DCC9F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7B9D9B6-2AC3-4BF7-9FE7-12F27E317F24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7B9D9B6-2AC3-4BF7-9FE7-12F27E317F24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7B9D9B6-2AC3-4BF7-9FE7-12F27E317F24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7B9D9B6-2AC3-4BF7-9FE7-12F27E317F24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13370F57-C421-4D4E-9D79-696A5E725046}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13370F57-C421-4D4E-9D79-696A5E725046}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13370F57-C421-4D4E-9D79-696A5E725046}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13370F57-C421-4D4E-9D79-696A5E725046}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {55B5C02A-E786-4DBD-8020-FAE9CCD89CDA}
+	EndGlobalSection
+EndGlobal
