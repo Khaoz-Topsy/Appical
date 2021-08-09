@@ -10,7 +10,6 @@ using Appical.Persistence.Entity;
 using Appical.Persistence.Mapper;
 using Appical.Persistence.Repository.Interface;
 using Appical.Persistence.Validator;
-using Castle.Components.DictionaryAdapter;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
@@ -63,7 +62,9 @@ namespace Appical.Persistence.Repository
 
                 Transaction persistence = TransactionMapper.ToPersistence(dto);
                 await _db.Transactions.AddAsync(persistence);
+
                 await _db.SaveChangesAsync();
+                await transaction.CommitAsync();
 
                 return TransactionMapper.ToDto(persistence);
             }
@@ -101,13 +102,14 @@ namespace Appical.Persistence.Repository
         /// Get latest transaction for AccountId specified
         /// </summary>
         /// <param name="accountId"></param>
-        public async Task<Guid?> GetLatestTransactionId(Guid accountId)
+        public async Task<TransactionDto> GetLatestTransactionId(Guid accountId)
         {
             Transaction existingPersistence = await _db.Transactions
                 .OrderByDescending(t => t.ActionDate)
                 .FirstOrDefaultAsync(tran => tran.AccountId.Equals(accountId));
+            if (existingPersistence == null) throw new PersistenceEntityDoesNotExistException(accountId);
 
-            return existingPersistence?.Id;
+            return TransactionMapper.ToDto(existingPersistence);
         }
 
         /// <summary>

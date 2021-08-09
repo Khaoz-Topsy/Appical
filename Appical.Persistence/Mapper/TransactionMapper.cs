@@ -16,7 +16,7 @@ namespace Appical.Persistence.Mapper
                 AccountId = dto.AccountId,
                 Amount = Math.Abs(dto.Amount),
                 Action = (dto.Amount > 0) ? TransactionActionType.Deposit : TransactionActionType.Withdrawal,
-                ActionDate = dto.ActionDate,
+                ActionDate = dto.ActionDate.ToUniversalTime(),
             };
         }
 
@@ -28,7 +28,7 @@ namespace Appical.Persistence.Mapper
                 AccountId = transactionDto.AccountId,
                 Amount = transactionDto.Amount,
                 PreviousTransactionId = transactionDto.PreviousTransactionId,
-                ActionDate = DateTime.Now,
+                ActionDate = DateTime.Now.ToUniversalTime(),
             };
 
             return dtoToCreate;
@@ -38,7 +38,7 @@ namespace Appical.Persistence.Mapper
         {
             persistence.Amount = Math.Abs(dto.Amount);
             persistence.Action = (dto.Amount > 0) ? TransactionActionType.Deposit : TransactionActionType.Withdrawal;
-            persistence.ActionDate = dto.ActionDate;
+            persistence.ActionDate = dto.ActionDate.ToUniversalTime();
 
             return persistence;
         }

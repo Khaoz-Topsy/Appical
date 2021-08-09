@@ -18,7 +18,7 @@ namespace Appical.Persistence.Repository.Interface
         /// Get latest transaction for AccountId specified
         /// </summary>
         /// <param name="accountId"></param>
-        Task<Guid?> GetLatestTransactionId(Guid accountId);
+        Task<TransactionDto> GetLatestTransactionId(Guid accountId);
 
         /// <summary>
         /// Get transaction list for AccountIds specified

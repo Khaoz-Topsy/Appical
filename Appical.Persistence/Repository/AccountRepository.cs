@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Appical.Domain.Dto.Account;
+using Appical.Domain.Dto.Transaction;
 using Appical.Domain.Enum;
 using Appical.Domain.Exception;
 using Appical.Persistence.Entity;
@@ -38,6 +39,16 @@ namespace Appical.Persistence.Repository
 
             Account persistence = AccountMapper.ToPersistence(dto);
             await _db.Accounts.AddAsync(persistence);
+
+            Transaction firstTransAction = TransactionMapper.ToPersistence(new TransactionDto
+            {
+                Id = Guid.NewGuid(),
+                AccountId = persistence.Id,
+                Amount = 0,
+                ActionDate = DateTime.Now
+            });
+            await _db.Transactions.AddAsync(firstTransAction);
+
             await _db.SaveChangesAsync();
 
             return AccountMapper.ToDto(persistence);

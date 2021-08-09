@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using Appical.Domain.Enum;
-using Newtonsoft.Json;
 
 namespace Appical.Domain.Dto.Account
 {
@@ -15,10 +15,10 @@ namespace Appical.Domain.Dto.Account
 
         public AccountStatus Status { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public ClosureReasonType? ClosureReason { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public DateTime? ClosureDate { get; set; }
     }
 }

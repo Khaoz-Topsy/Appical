@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Appical.Domain.Dto.Account;
 using Appical.Domain.Exception;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace Appical.Api.Controllers
 {
@@ -15,10 +16,12 @@ namespace Appical.Api.Controllers
     public class BankClerkController : ControllerBase
     {
         private readonly IAccountRepository _accountRepo;
-
-        public BankClerkController(IAccountRepository accountRepo)
+        private readonly ILogger<BankClerkController> _logger;
+        
+        public BankClerkController(ILogger<BankClerkController> logger, IAccountRepository accountRepo)
         {
             _accountRepo = accountRepo;
+            _logger = logger;
         }
 
         /// <summary>
@@ -31,7 +34,7 @@ namespace Appical.Api.Controllers
         /// <returns>A newly created AccountDto</returns>
         /// <response code="201">Returns the newly created AccountDto</response>
         /// <response code="400">Validation issues</response>
-        [HttpPost("{accountOwnerId: guid}/Account")]
+        [HttpPost("{accountOwnerId}/Account")]
         [ProducesResponseType(typeof(AccountDto), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(List<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -46,8 +49,9 @@ namespace Appical.Api.Controllers
             {
                 return BadRequest(validationEx.Messages);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong");
             }
         }
@@ -62,7 +66,7 @@ namespace Appical.Api.Controllers
         /// <returns>A re-opened AccountDto</returns>
         /// <response code="200">Returns the reopened AccountDto</response>
         /// <response code="400">Validation issues</response>
-        [HttpPut("{accountOwnerId: guid}/ReOpenAccount")]
+        [HttpPut("{accountOwnerId}/ReOpenAccount")]
         [ProducesResponseType(typeof(AccountDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(List<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

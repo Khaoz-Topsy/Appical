@@ -39,7 +39,7 @@ namespace Appical.Api.Controllers
         [ProducesResponseType(typeof(AccountOwnerDto), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(List<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateAccountOwner([FromBody] AccountOwnerDto dto)
+        public async Task<IActionResult> CreateAccountOwner(CreateAccountOwnerDto dto)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace Appical.Api.Controllers
         /// <response code="200">Returns an existing AccountOwnerDto</response>
         /// <response code="404">Account not found</response>
         /// <response code="500">Unhandled exceptions</response>
-        [HttpGet("{id:Guid}")]
+        [HttpGet("{id}")]
         [ProducesResponseType(typeof(AccountOwnerDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(AccountOwnerDto), StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -130,7 +130,7 @@ namespace Appical.Api.Controllers
         /// <response code="200">Returns a list of accounts associated with the AccountOwner</response>
         /// <response code="404">Account not found</response>
         /// <response code="500">Unhandled exceptions</response>
-        [HttpGet("{id:Guid}/Overview")]
+        [HttpGet("{id}/Overview")]
         [ProducesResponseType(typeof(List<AccountDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -203,7 +203,7 @@ namespace Appical.Api.Controllers
         /// <response code="400">Validation issues such as accounts not being empty and thus cannot be closed</response>
         /// <response code="404">AccountOwner with the specified Id was not found</response>
         /// <response code="500">Unhandled exceptions</response>
-        [HttpDelete("{id:Guid}")]
+        [HttpDelete("{id}")]
         [ProducesResponseType(typeof(AccountOwnerDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

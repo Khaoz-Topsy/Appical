@@ -11,16 +11,14 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Appical.Test
 {
     [TestFixture]
-    public class AssesmentTest
+    public class AssessmentTest
     {
-        private DbContextOptions<AppicalContext> dbContextOptions = new DbContextOptionsBuilder<AppicalContext>()
+        private readonly DbContextOptions<AppicalContext> _dbContextOptions = new DbContextOptionsBuilder<AppicalContext>()
            .UseInMemoryDatabase(databaseName: "Appical")
            .ConfigureWarnings(w => w.Ignore(InMemoryEventId.TransactionIgnoredWarning))
            .Options;
@@ -38,7 +36,7 @@ namespace Appical.Test
         [OneTimeSetUp]
         public async Task Setup()
         {
-            AppicalContext context = new AppicalContext(dbContextOptions);
+            AppicalContext context = new AppicalContext(_dbContextOptions);
             _accountOwnerRepo = new AccountOwnerRepository(context);
             _accountRepo = new AccountRepository(context);
             _transactionRepo = new TransactionRepository(context);
@@ -72,11 +70,14 @@ namespace Appical.Test
         [TestCase]
         public async Task UseCase2() //  Deposit cash into Account
         {
+            TransactionDto latestTransaction = await _transactionRepo.GetLatestTransactionId(_accountOwnerTestCreatedAccountGuid);
+
             AccountTransactionDto transDto = new AccountTransactionDto
             {
                 AccountId = _accountOwnerTestCreatedAccountGuid,
                 AccountOwnerId = _accountOwnerGuid,
                 Amount = UseCase2AmountToAdd,
+                PreviousTransactionId = latestTransaction.Id,
             };
             await _transactionRepo.Create(transDto);
 
@@ -89,7 +90,7 @@ namespace Appical.Test
         [TestCase]
         public async Task UseCase3() // Withdraw cash into Account
         {
-            Guid? latestTransactionId = await _transactionRepo.GetLatestTransactionId(_accountOwnerTestCreatedAccountGuid);
+            TransactionDto latestTransaction = await _transactionRepo.GetLatestTransactionId(_accountOwnerTestCreatedAccountGuid);
 
             // --- Business Rules ---
             // An account Balance cannot be negative
@@ -98,19 +99,19 @@ namespace Appical.Test
                 AccountId = _accountOwnerTestCreatedAccountGuid,
                 AccountOwnerId = _accountOwnerGuid,
                 Amount = -1000000,
-                PreviousTransactionId = latestTransactionId,
+                PreviousTransactionId = latestTransaction.Id,
             };
             Assert.ThrowsAsync<PersistenceEntityNotValidException>(async () => await _transactionRepo.Create(expectedToFailTransactionDto));
 
             // A Withdrawal Transaction either succeeds for the entire amount or fails due to insufficient funds.
-            AccountTransactionDto expectedTosucceedTransactionDto = new AccountTransactionDto
+            AccountTransactionDto expectedToSucceedTransactionDto = new AccountTransactionDto
             {
                 AccountId = _accountOwnerTestCreatedAccountGuid,
                 AccountOwnerId = _accountOwnerGuid,
                 Amount = UseCase3AmountToSubtract,
-                PreviousTransactionId = latestTransactionId,
+                PreviousTransactionId = latestTransaction.Id,
             };
-            await _transactionRepo.Create(expectedTosucceedTransactionDto);
+            await _transactionRepo.Create(expectedToSucceedTransactionDto);
 
             // --- Acceptance Criteria ---
             // The Withdrawal Amount is deducted from the Account Balance
@@ -122,7 +123,7 @@ namespace Appical.Test
         [TestCase]
         public async Task UseCase4() // Close an Account
         {
-            Guid? latestTransactionId = await _transactionRepo.GetLatestTransactionId(_accountOwnerTestCreatedAccountGuid);
+            TransactionDto latestTransaction = await _transactionRepo.GetLatestTransactionId(_accountOwnerTestCreatedAccountGuid);
 
             // --- Business Rules ---
             // An account can only be Closed if the Balance is 0.
@@ -135,7 +136,7 @@ namespace Appical.Test
                 AccountId = _accountOwnerTestCreatedAccountGuid,
                 AccountOwnerId = _accountOwnerGuid,
                 Amount = decimal.Negate(expectedBalance),
-                PreviousTransactionId = latestTransactionId,
+                PreviousTransactionId = latestTransaction.Id,
             };
             TransactionDto successfulTransactionThatBringsBalanceToZero = await _transactionRepo.Create(expectedToSucceedTransactionDto);
             Guid latestSuccessfulTransactionId = successfulTransactionThatBringsBalanceToZero.Id;

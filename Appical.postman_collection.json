@@ -1,0 +1,474 @@
+{
+	"info": {
+		"_postman_id": "abe05307-22ca-4bad-9fbe-b544537afdf4",
+		"name": "Appical",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "UseCase1",
+			"item": [
+				{
+					"name": "1) Create OwnerAccount",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"PostManTest\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/AccountOwner",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"AccountOwner"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2) Open Account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/BankClerk/{{accountOwnerGuid}}/Account",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"BankClerk",
+								"{{accountOwnerGuid}}",
+								"Account"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UseCase2",
+			"item": [
+				{
+					"name": "1) GetLatestTransaction",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"AccountId\": \"{{accountOwnerTestCreatedAccountGuid}}\",\r\n    \"AccountOwnerId\": \"{{accountOwnerGuid}}\",\r\n    \"Amount\": {{useCase2AmountToAdd}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/Transaction/Latest/{{accountGuid}}",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"Transaction",
+								"Latest",
+								"{{accountGuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2) Deposit Cash",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"AccountId\": \"{{accountGuid}}\",\r\n    \"AccountOwnerId\": \"{{accountOwnerGuid}}\",\r\n    \"PreviousTransactionId\": \"{{latestTransaction}}\",\r\n    \"Amount\": {{useCase2AmountToAdd}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/Transaction",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"Transaction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3) View Account Balance",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"AccountId\": \"{{accountOwnerTestCreatedAccountGuid}}\",\r\n    \"AccountOwnerId\": \"{{accountOwnerGuid}}\",\r\n    \"Amount\": {{useCase2AmountToAdd}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/Account/overview/{{accountOwnerGuid}}",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"Account",
+								"overview",
+								"{{accountOwnerGuid}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UseCase3",
+			"item": [
+				{
+					"name": "1) GetLatestTransaction",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"AccountId\": \"{{accountOwnerTestCreatedAccountGuid}}\",\r\n    \"AccountOwnerId\": \"{{accountOwnerGuid}}\",\r\n    \"Amount\": {{useCase2AmountToAdd}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/Transaction/Latest/{{accountGuid}}",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"Transaction",
+								"Latest",
+								"{{accountGuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2) Withdraw Cash (Fail expected)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"AccountId\": \"{{accountGuid}}\",\r\n    \"AccountOwnerId\": \"{{accountOwnerGuid}}\",\r\n    \"PreviousTransactionId\": \"{{latestTransaction}}\",\r\n    \"Amount\": -1000000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/Transaction",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"Transaction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3) Withdraw Cash",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"AccountId\": \"{{accountGuid}}\",\r\n    \"AccountOwnerId\": \"{{accountOwnerGuid}}\",\r\n    \"PreviousTransactionId\": \"{{latestTransaction}}\",\r\n    \"Amount\": {{useCase3AmountToSubtract}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/Transaction",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"Transaction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4) View Account Balance",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"AccountId\": \"{{accountOwnerTestCreatedAccountGuid}}\",\r\n    \"AccountOwnerId\": \"{{accountOwnerGuid}}\",\r\n    \"Amount\": {{useCase2AmountToAdd}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/Account/overview/{{accountOwnerGuid}}",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"Account",
+								"overview",
+								"{{accountOwnerGuid}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UseCase4",
+			"item": [
+				{
+					"name": "1) GetLatestTransaction",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"AccountId\": \"{{accountOwnerTestCreatedAccountGuid}}\",\r\n    \"AccountOwnerId\": \"{{accountOwnerGuid}}\",\r\n    \"Amount\": {{useCase2AmountToAdd}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/Transaction/Latest/{{accountGuid}}",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"Transaction",
+								"Latest",
+								"{{accountGuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2) Close Account (Fail expected)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/Account/{{accountGuid}}/close",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"Account",
+								"{{accountGuid}}",
+								"close"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3) Withdraw Cash till empty",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"AccountId\": \"{{accountGuid}}\",\r\n    \"AccountOwnerId\": \"{{accountOwnerGuid}}\",\r\n    \"PreviousTransactionId\": \"{{latestTransaction}}\",\r\n    \"Amount\": {{useCase3AmountToGetToZeroBalance}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/Transaction",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"Transaction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4) View Account Balance",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"AccountId\": \"{{accountOwnerTestCreatedAccountGuid}}\",\r\n    \"AccountOwnerId\": \"{{accountOwnerGuid}}\",\r\n    \"Amount\": {{useCase2AmountToAdd}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/Account/overview/{{accountOwnerGuid}}",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"Account",
+								"overview",
+								"{{accountOwnerGuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5) Close Account",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/Account/{{accountGuid}}/close",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"Account",
+								"{{accountGuid}}",
+								"close"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UseCase5",
+			"item": [
+				{
+					"name": "View Accounts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"AccountId\": \"{{accountOwnerTestCreatedAccountGuid}}\",\r\n    \"AccountOwnerId\": \"{{accountOwnerGuid}}\",\r\n    \"Amount\": {{useCase2AmountToAdd}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/Account/overview/{{accountOwnerGuid}}",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"Account",
+								"overview",
+								"{{accountOwnerGuid}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UseCase6",
+			"item": [
+				{
+					"name": "View Account transactions",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"AccountId\": \"{{accountOwnerTestCreatedAccountGuid}}\",\r\n    \"AccountOwnerId\": \"{{accountOwnerGuid}}\",\r\n    \"Amount\": {{useCase2AmountToAdd}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/Transaction/List/{{accountGuid}}",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"Transaction",
+								"List",
+								"{{accountGuid}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

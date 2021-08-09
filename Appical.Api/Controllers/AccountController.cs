@@ -29,21 +29,21 @@ namespace Appical.Api.Controllers
         /// <remarks>
         /// Required permissions: AccountOwner-ViewAccount
         /// </remarks>
-        /// <param name="id">Id of the Account to get an Overview for</param>
+        /// <param name="accountOwnerId">Id of the Account to get an Overview for</param>
         /// <returns>An AccountOverviewDto</returns>
         /// <response code="200">Returns the overview on an Account</response>
         /// <response code="400">Validation issues</response>
-        [HttpGet("{id: guid}/overview")]
+        [HttpGet("overview/{accountOwnerId}")]
         [ProducesResponseType(typeof(AccountDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(List<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<AccountDto>> GetAccountOverview(Guid id)
+        public async Task<ActionResult<AccountDto>> GetOverviewForAccountOwner(Guid accountOwnerId)
         {
             // Verify request is coming from an AccountOwner that owns the Account
 
             try
             {
-                List<AccountDto> overviewDto = await _accountRepo.ReadForAccountOwner(id);
+                List<AccountDto> overviewDto = await _accountRepo.ReadForAccountOwner(accountOwnerId);
                 return Ok(overviewDto);
             }
             catch (PersistenceEntityDoesNotExistException doesNotExistEx)
@@ -66,11 +66,11 @@ namespace Appical.Api.Controllers
         /// <returns>A closed AccountDto</returns>
         /// <response code="200">Returns the reopened AccountDto</response>
         /// <response code="400">Validation issues</response>
-        [HttpPut("{id: guid}/Close")]
+        [HttpPut("{id}/Close")]
         [ProducesResponseType(typeof(AccountDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(List<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<AccountDto>> CloseAccountForAccountOwner(Guid id)
+        public async Task<ActionResult<AccountDto>> CloseAccount(Guid id)
         {
             // Verify request is coming from an AccountOwner that owns the Account being closed
 
@@ -85,7 +85,7 @@ namespace Appical.Api.Controllers
             }
             catch (AccountBalanceNotZeroException accountBalanceNotZeroException)
             {
-                return BadRequest($"Account has a balance greater than zero: {string.Join(", ", accountBalanceNotZeroException.AccountIds)}");
+                return BadRequest($"The following Accounts have a balance greater than zero: {string.Join(", ", accountBalanceNotZeroException.AccountIds)}");
             }
             catch (Exception)
             {
