@@ -1,4 +1,8 @@
-## Appical 
+## Appical - Bank Account Management API
+
+### Additional features
+- CI / CD with Azure DevOps [![Build Status](https://dev.azure.com/khaoznet/KhaozNet/_apis/build/status/Khaoz-Topsy.Appical?branchName=master)](https://dev.azure.com/khaoznet/KhaozNet/_build/latest?definitionId=79&branchName=master)
+
 
 #### Decisions made
 - I moved the validation closer to the database
